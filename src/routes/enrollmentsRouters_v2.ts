@@ -25,7 +25,7 @@ import { error } from "console";
 import { authenticateToken } from "../middlewares/authenticMiddleware.js";
 import { checkRoleAdmin } from "../middlewares/checkRoleAdminMiddleware.js"; 
 import { checkRoleStudent } from "../middlewares/checkRoleStudentMiddleware.js"; 
-import { checkRoles } from "../middlewares/checkRolesMiddleware.js"; 
+import { checkRole } from "../middlewares/checkRolesMiddleware.js"; 
 import { zStudentId } from "../libs/zodValidators.js";
 import { zEnrollmentBody } from "../libs/zodValidators.js";
 
@@ -86,7 +86,7 @@ router.post("/reset", (req: Request, res: Response) => {
 router.get(
   "/:studentId",
   authenticateToken,
-  checkRoles,
+  checkRole,
   (req: CustomRequest, res: Response) => {
     try {
       const studentId = req.params.studentId;
@@ -140,7 +140,7 @@ router.get(
 router.post(
   "/:studentId",
   authenticateToken,
-  checkRoles,
+  checkRole,
   (req: CustomRequest, res: Response) => {
     try {
       const { studentId } = req.params;

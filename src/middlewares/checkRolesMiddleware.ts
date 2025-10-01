@@ -8,26 +8,16 @@ import { users, reset_users } from "../db/db.js";
 //   token?: string; // Define the token property
 // }
 
-export const checkRoles = (
-  req: CustomRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  // 1. get "user payload" and "token" from (custom) request
+export const checkRole = (req: CustomRequest, res: Response, next: NextFunction) => {
   const payload = req.user;
-  const token = req.token;
-
-  // 2. check if user exists (search with username)
-  const user = users.find((u: User) => u.username === payload?.username);
-  if (!user) {
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized user",
-    });
+  if (!payload) {
+    return res.status(401).json({ success: false, message: "Unauthorized user" });
   }
-
-  // (optional) check if token exists in user data
-
-  // Proceed to next middleware or route handler
-  next();
+  const user = users.find(u => u.username === payload.username);
+  if (!user) {
+    return res.status(401).json({ success: false, message: "Unauthorized user" });
+  }
+  if (payload.role === "ADMIN") return next();
+  if (payload.role === "STUDENT" && payload.studentId === req.params.studentId) return next();
+  return res.status(403).json({ success: false, message: "Forbidden access" });
 };

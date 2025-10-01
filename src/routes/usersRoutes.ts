@@ -3,10 +3,11 @@ import jwt from "jsonwebtoken";             //pnpm i -D @types/jsonwebtoken
 import dotenv from "dotenv";                //pnpm install dotenv
 dotenv.config();;
 
-import type { User, CustomRequest } from "../libs/types.js";
+import type { User, CustomRequest , UserPayload} from "../libs/types.js";
 
 // import database
 import { users, reset_users } from "../db/db.js";
+import { success } from "zod";
 import { zStudentId } from "../libs/zodValidators.js";
 
 
@@ -22,11 +23,11 @@ router.get("/", authenticateToken, checkRoleAdmin, (req: Request, res: Response)
   try {
     return res.status(200).json({
       success: true,
-      message: "List of all users",           
+      message: "successful oparation",           
       data: users
     });
   } catch (err) {
-    return res.status(200).json({
+    return res.status(500).json({
       success: false,
       message: "Something is wrong, please try again",
       error: err,
