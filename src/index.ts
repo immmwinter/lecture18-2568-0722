@@ -9,6 +9,8 @@ import notFoundMiddleware from "./middlewares/notFoundMiddleware.js";
 import studentRouter_v2 from "./routes/studentsRoutes_v2.js";
 import studentRouter_v3 from "./routes/studentsRoutes_v3.js";
 import courseRouter_v2 from "./routes/coursesRouters_v2.js";
+//import enrollmentsRouter_v2 from "./routes/enrollmentsRoutes_v2.js";
+import userRoutes from "./routes/usersRoutes.js";
 
 const app = express();
 const port = 3000;
@@ -25,7 +27,7 @@ app.use(invalidJsonMiddleware);
 
 // Endpoints
 app.get("/", (req: Request, res: Response) => {
-  res.send("Lecture18 API services");
+  res.send("Lab16 API services");
 });
 
 app.get("/me", (req: Request, res: Response) => {
@@ -45,6 +47,8 @@ app.get("/me", (req: Request, res: Response) => {
 app.use("/api/v2/students", studentRouter_v2);
 app.use("/api/v3/students", studentRouter_v3);
 app.use("/api/v2/courses", courseRouter_v2);
+app.use("/api/v2/enrollments", courseRouter_v2);
+app.use("/api/v2/users", userRoutes);
 
 // endpoint check middleware
 app.use(notFoundMiddleware);
