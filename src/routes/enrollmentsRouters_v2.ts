@@ -50,7 +50,7 @@ router.get(
       });
 
       return res.status(200).json({
-        success: false,
+        success: true,
         message: "Enrollments Information",
         data: user_id,
       });
